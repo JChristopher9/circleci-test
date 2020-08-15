@@ -1,19 +1,15 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import "./index.css";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
-import { CountProvider } from "context/count";
-import { UserProvider } from "context/user";
 import "antd/dist/antd.css";
+import { BrowserRouter } from "react-router-dom";
 
-ReactDOM.render(
+ReactDOM.hydrate(
   <React.StrictMode>
-    <CountProvider>
-      <UserProvider>
-        <App />
-      </UserProvider>
-    </CountProvider>
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
   </React.StrictMode>,
   document.getElementById("root")
 );
