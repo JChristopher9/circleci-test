@@ -1,32 +1,38 @@
-import React, { Component } from "react";
-import axios from "axios";
-import { Switch, Route } from "react-router-dom";
-import history from "historyHelper";
+import React, { ReactElement } from "react";
+import { BasicLayout } from "@ant-design/pro-layout";
+interface Props {}
 
-axios.interceptors.response.use(
-  config => config,
-  err => {
-    history.replace("profile");
-    Promise.reject(err);
-  }
-);
-
-axios.get("https://jsonplaceholde r.typicode.com/posts").then(res => {
-  console.log(res);
-});
-export default function App() {
+function App({}: Props): ReactElement {
   return (
-    <Switch>
-      <Route path="/login" component={Login} />
-      <Route path="/profile" component={Profile} />
-    </Switch>
+    <BasicLayout
+      menuDataRender={() => [
+        {
+          Path: "/",
+          Name: "welcome",
+          Icon: "smile",
+          Children: [
+            {
+              Path: "/welcome",
+              Name: "one",
+              Children: [
+                {
+                  Path: "/welcome/welcome",
+                  Name: "two",
+                  Icon: "smile",
+                  Exact: true,
+                },
+              ],
+            },
+          ],
+        },
+      ]}
+      menuItemRender={(menuItemProps, defaultDom) =>
+        menuItemProps.isUrl ? defaultDom : <a>open {defaultDom}</a>
+      }
+    >
+      Hello World
+    </BasicLayout>
   );
 }
 
-const Login = () => {
-  return <div className="login">login page</div>;
-};
-
-const Profile = () => {
-  return <div className="login">profile page</div>;
-};
+export default App;
